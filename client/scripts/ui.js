@@ -252,8 +252,9 @@ class ReceiveDialog extends Dialog {
     constructor() {
         super('receiveDialog');
         Events.on('file-received', e => {
+            console.log(e);
             this._nextFile(e.detail);
-            window.blop.play();
+           
         });
         this._filesQueue = [];
     }
@@ -279,16 +280,39 @@ class ReceiveDialog extends Dialog {
     }
 
     _displayFile(file) {
+        
         const $a = this.$el.querySelector('#download');
         const url = URL.createObjectURL(file.blob);
         $a.href = url;
         $a.download = file.name;
-
+        const mimeType = file.mime;
         if(this._autoDownload()){
             $a.click()
             return
         }
-
+        if(mimeType.split('/')[0] === 'image'){
+            console.log('the file is image');
+            this.$el.querySelector(".img-preview").src = url;
+        }
+        else if(mimeType.split('/')[0] === 'video'){
+            console.log('the file is video');
+            console.log(url);
+            
+            this.$el.querySelector(".video-preview").style.display = 'inherit'; 
+            this.$el.querySelector(".video-preview").src =  window.URL.createObjectURL(new Blob([file.blob]));
+            this.$el.querySelector(".video-preview").type = file.mime;
+            this.$el.querySelector(".video-preview").play();
+            
+        }else{
+            var mydiv = document.getElementById("link-preview");
+            mydiv.style.display = 'inherit';
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',url);
+            aTag.setAttribute('target',"_blank");
+            aTag.innerText = "Preview File";
+            mydiv.appendChild(aTag);
+        }
+        
         this.$el.querySelector('#fileName').textContent = file.name;
         this.$el.querySelector('#fileSize').textContent = this._formatFileSize(file.size);
         this.show();
@@ -315,7 +339,11 @@ class ReceiveDialog extends Dialog {
 
     hide() {
         super.hide();
+        
         this._dequeueFile();
+        this.$el.querySelector(".img-preview").src = "";
+        this.$el.querySelector(".video-preview").style.display = 'none'; 
+        document.getElementById("link-preview").style.display = 'none';
     }
 
 
