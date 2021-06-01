@@ -281,6 +281,14 @@ class ReceiveDialog extends Dialog {
             this.$el.querySelector(".video-preview").type = file.mime;
             this.$el.querySelector(".video-preview").play();
             
+        }else{
+            var mydiv = document.getElementById("link-preview");
+            mydiv.style.display = 'inherit';
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',url);
+            aTag.setAttribute('target',"_blank");
+            aTag.innerText = "Preview File";
+            mydiv.appendChild(aTag);
         }
         
         this.$el.querySelector('#fileName').textContent = file.name;
@@ -313,6 +321,7 @@ class ReceiveDialog extends Dialog {
         this._dequeueFile();
         this.$el.querySelector(".img-preview").src = "";
         this.$el.querySelector(".video-preview").style.display = 'none'; 
+        document.getElementById("link-preview").style.display = 'none';
     }
 
 
