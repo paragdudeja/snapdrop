@@ -102,7 +102,29 @@ class PeerUI {
         el.ui = this;
         el.querySelector('svg use').setAttribute('xlink:href', this._icon());
         el.querySelector('.name').textContent = this._displayName();
-        el.querySelector('.device-name').textContent = this._deviceName();
+        var device_info = this._deviceName().toLowerCase();
+        var device_os = device_info.split(' ')[0];
+        var device_browser = device_info.split(' ')[1];
+        if(device_info.indexOf('linux')!=-1){
+            device_os = '<img src="../images/linux_icon.png" height="25" width="25" alt=""> ';
+        }
+        if(device_info.indexOf('ubuntu')!=-1){
+            device_os = '<img src="../images/ubuntu_icon.png" height="25" width="25" alt=""> ';
+        }
+        if(device_info.indexOf('windows')!=-1){
+            device_os = '<img src="../images/windows_icon.png" height="25" width="25" alt=""> ';
+        }
+        if(device_info.indexOf('android')!=-1){
+            device_os = '<img src="../images/android_icon.png" height="25" width="25" alt=""> ';
+        }
+        if(device_info.indexOf('chrome')!=-1){
+            device_browser = ' <img src="../images/chrome_icon.png" height="25" width="25" alt=""> ';;
+        }
+        if(device_info.indexOf('firefox')!=-1){
+            device_browser = ' <img src="../images/firefox_icon.png" height="25" width="25" alt=""> '
+        }
+        el.querySelector('.device-name').innerHTML = device_os + device_browser;
+        // el.querySelector('.device-name').textContent = this._deviceName();
         this.$el = el;
         this.$progress = el.querySelector('.progress');
     }
