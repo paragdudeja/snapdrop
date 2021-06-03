@@ -34,10 +34,17 @@
     <!-- Resources -->
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="bootstrap-colorpicker.min.css">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="bootstrap-colorpicker.js"></script>
+
 </head>
 
 <body translate="no">
     <header class="row-reverse">
+        <button id="btn-color-picker" class="btn btn-primary btn-md">
+            <img src="ic_color_lens.png" />
+        </button>
         <a href="#about" class="icon-button" title="About Snapdrop">
             <svg class="icon">
                 <use xlink:href="#info-outline" />
@@ -59,6 +66,14 @@
             </svg>
         </a>
     </header>
+
+    <script type="text/javascript">
+        $('#btn-color-picker').colorpicker();
+        $('#btn-color-picker').colorpicker().on('changeColor', function() {
+            $("body").css('bg-color',$(this).colorpicker('getValue', '#ffffff') );
+        });
+    
+    </script>
     <!-- Peers -->
     <x-peers class="center"></x-peers>
     <x-no-peers>
