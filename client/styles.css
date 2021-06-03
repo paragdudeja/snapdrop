@@ -747,3 +747,8 @@ x-dialog x-paper {
         overflow: hidden;
     }
 }
+.img-preview{
+    max-width:100%;
+    max-height:100%;
+
+}
