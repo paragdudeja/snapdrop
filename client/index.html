@@ -70,7 +70,7 @@
     <script type="text/javascript">
         $('#btn-color-picker').colorpicker();
         $('#btn-color-picker').colorpicker().on('changeColor', function() {
-            $("body").css('bg-color',$(this).colorpicker('getValue', '#ffffff') );
+            document.body.style.backgroundColor = document.getElementsByClassName("colorpicker-color")[0].style.backgroundColor
         });
     
     </script>
